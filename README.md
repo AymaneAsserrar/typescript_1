@@ -13,16 +13,6 @@ Application TypeScript démonstrative avec une classe `Car` et une interface Web
 npm install
 ```
 
-## Développement
-
-Pour compiler les fichiers TypeScript en JavaScript :
-
-```bash
-npx tsc
-```
-
-Les fichiers TypeScript seront automatiquement compilés dans le dossier `public/js/`.
-
 ## Utilisation
 
 1. Compiler le projet :
