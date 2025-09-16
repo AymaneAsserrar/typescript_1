@@ -1,51 +1,75 @@
 # typescript_1
 
-Projet TypeScript avec une classe `Car` + démo CLI et interface Web.
+Application TypeScript démonstrative avec une classe `Car` et une interface Web interactive.
 
 ## Prérequis
 
 - Node.js et npm installés
+- TypeScript (`npm install -g typescript`)
 
 ## Installation
 
-```powershell
+```bash
 npm install
 ```
 
-## Utilisation (CLI)
+## Développement
 
-- Dev (exécute `src/index.ts` avec ts-node):
+Pour compiler les fichiers TypeScript en JavaScript :
 
-```powershell
-npm run dev
+```bash
+npx tsc
 ```
 
-- Compiler TypeScript -> JavaScript:
+Les fichiers TypeScript seront automatiquement compilés dans le dossier `public/js/`.
 
-```powershell
-npm run build
+Pour un développement actif avec recompilation automatique :
+
+```bash
+npx tsc --watch
 ```
 
-- Exécuter la version compilée (`dist/index.js`):
+## Structure du Projet
 
-```powershell
-npm start
+```
+├── src/                    # Code source TypeScript
+│   ├── Car.ts             # Classe Car
+│   └── app.ts             # Application web
+├── public/                # Fichiers statiques et compilés
+│   ├── index.html        # Interface utilisateur web
+│   ├── js/              # JavaScript compilé
+│   │   ├── Car.js
+│   │   └── app.js
+│   └── ...              # Autres ressources statiques
+└── tsconfig.json         # Configuration TypeScript
 ```
 
-## Utilisation (Web)
+## Utilisation
 
-1. Construire le module ES pour le navigateur (génère `public/js/Car.js`):
+1. Compiler le projet :
 
-```powershell
-npm run build:web
-```
+   ```bash
+   npx tsc
+   ```
 
-2. Ouvrir l'interface:
-   - Option simple: ouvrir le fichier `public/index.html` dans le navigateur / Avec le live server si sur VSCODE
+2. Ouvrir l'interface web :
+   - Option simple : ouvrir le fichier `public/index.html` dans le navigateur
+   - Avec VS Code : utiliser l'extension "Live Server" et cliquer sur "Go Live"
 
-## Fichiers importants
+## Fonctionnalités
 
-- `src/Car.ts` : classe exportée `Car`
-- `src/index.ts` : démo CLI
-- `public/index.html` : interface Web
+L'interface web permet de :
+
+- Créer une nouvelle voiture avec modèle, marque, couleur et année
+- Démarrer et arrêter la voiture
+- Accélérer la voiture
+- Voir l'état actuel de la voiture en temps réel
+
+## Configuration TypeScript
+
+Le projet utilise la configuration suivante :
+
+- Cible ES2020 pour la compatibilité navigateur moderne
+- Modules ES2020 pour l'import/export natif
+- Mode strict activé pour une meilleure sécurité des types
 - `public/app.js` : logique UI (importe `./js/Car.js`)

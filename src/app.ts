@@ -1,19 +1,19 @@
-import { Car } from "./js/Car.js";
+import { Car } from "./Car";
 
-const el = (id) => document.getElementById(id);
-const $model = el("model");
-const $brand = el("brand");
-const $color = el("color");
-const $year = el("year");
-const $create = el("create");
-const $start = el("start");
-const $accelerate = el("accelerate");
-const $stop = el("stop");
-const $status = el("status");
+const el = (id: string): HTMLElement | null => document.getElementById(id);
+const $model = el("model") as HTMLInputElement;
+const $brand = el("brand") as HTMLInputElement;
+const $color = el("color") as HTMLInputElement;
+const $year = el("year") as HTMLInputElement;
+const $create = el("create") as HTMLButtonElement;
+const $start = el("start") as HTMLButtonElement;
+const $accelerate = el("accelerate") as HTMLButtonElement;
+const $stop = el("stop") as HTMLButtonElement;
+const $status = el("status") as HTMLElement;
 
-let car = null;
+let car: Car | null = null;
 
-function render() {
+function render(): void {
   if (!car) {
     $status.textContent = "Aucune voiture créée.";
     $start.disabled = true;
@@ -54,4 +54,5 @@ $stop.addEventListener("click", () => {
   render();
 });
 
+// Initial render
 render();
