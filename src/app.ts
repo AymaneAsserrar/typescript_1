@@ -8,7 +8,6 @@ const el = (id: string): HTMLElement | null => {
   return element;
 };
 
-// Input elements
 const $model = el("model") as HTMLInputElement;
 const $brand = el("brand") as HTMLInputElement;
 const $color = el("color") as HTMLInputElement;
@@ -16,7 +15,6 @@ const $year = el("year") as HTMLInputElement;
 const $type = el("type") as HTMLSelectElement;
 const $maxSpeed = el("maxSpeed") as HTMLInputElement;
 
-// Button elements
 const $create = el("create") as HTMLButtonElement;
 const $start = el("start") as HTMLButtonElement;
 const $accelerate = el("accelerate") as HTMLButtonElement;
@@ -24,13 +22,11 @@ const $brake = el("brake") as HTMLButtonElement;
 const $stop = el("stop") as HTMLButtonElement;
 const $refuel = el("refuel") as HTMLButtonElement;
 
-// Display elements
 const $status = el("status") as HTMLElement;
 const $speedometer = el("speedometer") as HTMLElement;
 const $fuelGauge = el("fuelGauge") as HTMLElement;
 const $colorPreview = el("colorPreview") as HTMLElement;
 
-// Debug check for all elements
 console.log("Elements loaded:", {
   model: $model,
   brand: $brand,
@@ -48,18 +44,18 @@ let car: Car | null = null;
 function updateGauges(): void {
   if (!car) return;
 
-  // Update speedometer
   const speedPercentage = (car.speed / car.maxSpeed) * 100;
-  const speedLabel = $speedometer.querySelector('.gauge-label') as HTMLElement;
-  const speedVisual = $speedometer.querySelector('.gauge-visual') as HTMLElement;
+  const speedLabel = $speedometer.querySelector(".gauge-label") as HTMLElement;
+  const speedVisual = $speedometer.querySelector(
+    ".gauge-visual"
+  ) as HTMLElement;
   speedLabel.textContent = `${car.speed.toFixed(0)} km/h`;
-  speedVisual.style.setProperty('--value', `${speedPercentage}%`);
+  speedVisual.style.setProperty("--value", `${speedPercentage}%`);
 
-  // Update fuel gauge
-  const fuelLabel = $fuelGauge.querySelector('.gauge-label') as HTMLElement;
-  const fuelVisual = $fuelGauge.querySelector('.gauge-visual') as HTMLElement;
+  const fuelLabel = $fuelGauge.querySelector(".gauge-label") as HTMLElement;
+  const fuelVisual = $fuelGauge.querySelector(".gauge-visual") as HTMLElement;
   fuelLabel.textContent = `${car.fuelLevel.toFixed(0)}%`;
-  fuelVisual.style.setProperty('--value', `${car.fuelLevel}%`);
+  fuelVisual.style.setProperty("--value", `${car.fuelLevel}%`);
 }
 
 function updateColorPreview(): void {
@@ -89,7 +85,6 @@ function render(): void {
   updateGauges();
 }
 
-// Color preview update
 $color.addEventListener("input", updateColorPreview);
 updateColorPreview();
 
@@ -111,9 +106,17 @@ $create.addEventListener("click", () => {
   );
 
   // Save to localStorage
-  localStorage.setItem('lastCar', JSON.stringify({
-    model, brand, color, year, type, maxSpeed
-  }));
+  localStorage.setItem(
+    "lastCar",
+    JSON.stringify({
+      model,
+      brand,
+      color,
+      year,
+      type,
+      maxSpeed,
+    })
+  );
 
   render();
 });
@@ -149,7 +152,7 @@ $refuel.addEventListener("click", () => {
 });
 
 // Load last car from localStorage
-const lastCar = localStorage.getItem('lastCar');
+const lastCar = localStorage.getItem("lastCar");
 if (lastCar) {
   try {
     const { model, brand, color, year, type, maxSpeed } = JSON.parse(lastCar);
@@ -161,16 +164,14 @@ if (lastCar) {
     $maxSpeed.value = maxSpeed.toString();
     updateColorPreview();
   } catch (e) {
-    console.error('Failed to load last car:', e);
+    console.error("Failed to load last car:", e);
   }
 }
 
-// Update gauges every second when the car is running
 setInterval(() => {
   if (car && car.started) {
     render();
   }
 }, 1000);
 
-// Initial render
 render();

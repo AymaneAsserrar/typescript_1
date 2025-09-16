@@ -1,7 +1,7 @@
 export enum CarType {
-  Gasoline = 'gasoline',
-  Electric = 'electric',
-  Hybrid = 'hybrid'
+  Gasoline = "gasoline",
+  Electric = "electric",
+  Hybrid = "hybrid",
 }
 
 export class Car {
@@ -19,11 +19,21 @@ export class Car {
   started: boolean;
 
   // Getters
-  get maxSpeed(): number { return this._maxSpeed; }
-  get type(): CarType { return this._type; }
-  get fuelLevel(): number { return this._fuelLevel; }
-  get speed(): number { return this._speed; }
-  get distance(): number { return this._distance; }
+  get maxSpeed(): number {
+    return this._maxSpeed;
+  }
+  get type(): CarType {
+    return this._type;
+  }
+  get fuelLevel(): number {
+    return this._fuelLevel;
+  }
+  get speed(): number {
+    return this._speed;
+  }
+  get distance(): number {
+    return this._distance;
+  }
 
   constructor(
     model: string,
@@ -73,11 +83,11 @@ export class Car {
     const newSpeed = Math.min(this._speed + value, this._maxSpeed);
     const actualAcceleration = newSpeed - this._speed;
     this._speed = newSpeed;
-    
+
     // Calculate fuel consumption based on acceleration and car type
     const fuelConsumption = this.calculateFuelConsumption(actualAcceleration);
     this._fuelLevel = Math.max(0, this._fuelLevel - fuelConsumption);
-    
+
     // Update distance
     this._distance += this._speed / 3600; // Convert to km (assuming updates every second)
   }
@@ -85,7 +95,7 @@ export class Car {
   brake(value: number): void {
     if (!this.started) return;
     if (value <= 0) return;
-    
+
     this._speed = Math.max(0, this._speed - value);
   }
 
@@ -97,14 +107,14 @@ export class Car {
   private calculateFuelConsumption(acceleration: number): number {
     const baseConsumption = 0.01; // Base consumption per second
     const accelerationConsumption = acceleration * 0.002; // Additional consumption for acceleration
-    
+
     // Different car types have different fuel efficiency
     const typeMultiplier = {
       [CarType.Electric]: 0.6,
       [CarType.Hybrid]: 0.8,
-      [CarType.Gasoline]: 1.0
+      [CarType.Gasoline]: 1.0,
     }[this.type];
-    
+
     return (baseConsumption + accelerationConsumption) * typeMultiplier;
   }
 
@@ -114,7 +124,9 @@ export class Car {
 
   status(): string {
     const fuelType = this.getFuelType();
-    return `Car(${this.brand} ${this.model}, ${this.color}, ${this.year}, ${this.type}) -> 
+    return `Car(${this.brand} ${this.model}, ${this.color}, ${this.year}, ${
+      this.type
+    }) -> 
       started: ${this.started}, 
       speed: ${this.speed.toFixed(1)}/${this.maxSpeed} km/h, 
       distance: ${this.distance.toFixed(1)} km,

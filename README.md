@@ -23,27 +23,6 @@ npx tsc
 
 Les fichiers TypeScript seront automatiquement compilés dans le dossier `public/js/`.
 
-Pour un développement actif avec recompilation automatique :
-
-```bash
-npx tsc --watch
-```
-
-## Structure du Projet
-
-```
-├── src/                    # Code source TypeScript
-│   ├── Car.ts             # Classe Car
-│   └── app.ts             # Application web
-├── public/                # Fichiers statiques et compilés
-│   ├── index.html        # Interface utilisateur web
-│   ├── js/              # JavaScript compilé
-│   │   ├── Car.js
-│   │   └── app.js
-│   └── ...              # Autres ressources statiques
-└── tsconfig.json         # Configuration TypeScript
-```
-
 ## Utilisation
 
 1. Compiler le projet :
@@ -58,12 +37,28 @@ npx tsc --watch
 
 ## Fonctionnalités
 
-L'interface web permet de :
+### Fonctionnalités avancées
 
-- Créer une nouvelle voiture avec modèle, marque, couleur et année
-- Démarrer et arrêter la voiture
-- Accélérer la voiture
-- Voir l'état actuel de la voiture en temps réel
+- Créer une voiture personnalisée :
+  - Choix du modèle, marque, couleur (avec aperçu), année
+  - Sélection du type (Électrique, Hybride, Essence)
+  - Définition de la vitesse maximale
+- Tableau de bord interactif :
+  - Speedomètre visuel en temps réel
+  - Jauge de carburant/batterie dynamique
+  - Affichage de la distance parcourue
+  - Aperçu de la couleur du véhicule
+- Contrôles avancés :
+  - Démarrer/Arrêter le moteur
+  - Accélérer (+10 km/h)
+  - Freiner (-10 km/h)
+  - Faire le plein/recharger
+- Gestion de l'énergie :
+  - Consommation différente selon le type de voiture
+  - Blocage du démarrage/accélération si batterie/carburant vide
+- Sauvegarde automatique :
+  - La dernière configuration de voiture est mémorisée (localStorage)
+- Code TypeScript strict, organisation moderne et interface responsive
 
 ## Configuration TypeScript
 
