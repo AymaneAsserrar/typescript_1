@@ -1,4 +1,4 @@
-import { Car } from "./Car.js";
+import { Car, CarType } from "./Car.js";
 
 const el = (id: string): HTMLElement | null => {
   const element = document.getElementById(id);
@@ -8,15 +8,27 @@ const el = (id: string): HTMLElement | null => {
   return element;
 };
 
+// Input elements
 const $model = el("model") as HTMLInputElement;
 const $brand = el("brand") as HTMLInputElement;
 const $color = el("color") as HTMLInputElement;
 const $year = el("year") as HTMLInputElement;
+const $type = el("type") as HTMLSelectElement;
+const $maxSpeed = el("maxSpeed") as HTMLInputElement;
+
+// Button elements
 const $create = el("create") as HTMLButtonElement;
 const $start = el("start") as HTMLButtonElement;
 const $accelerate = el("accelerate") as HTMLButtonElement;
+const $brake = el("brake") as HTMLButtonElement;
 const $stop = el("stop") as HTMLButtonElement;
+const $refuel = el("refuel") as HTMLButtonElement;
+
+// Display elements
 const $status = el("status") as HTMLElement;
+const $speedometer = el("speedometer") as HTMLElement;
+const $fuelGauge = el("fuelGauge") as HTMLElement;
+const $colorPreview = el("colorPreview") as HTMLElement;
 
 // Debug check for all elements
 console.log("Elements loaded:", {
@@ -33,29 +45,76 @@ console.log("Elements loaded:", {
 
 let car: Car | null = null;
 
+function updateGauges(): void {
+  if (!car) return;
+
+  // Update speedometer
+  const speedPercentage = (car.speed / car.maxSpeed) * 100;
+  const speedLabel = $speedometer.querySelector('.gauge-label') as HTMLElement;
+  const speedVisual = $speedometer.querySelector('.gauge-visual') as HTMLElement;
+  speedLabel.textContent = `${car.speed.toFixed(0)} km/h`;
+  speedVisual.style.setProperty('--value', `${speedPercentage}%`);
+
+  // Update fuel gauge
+  const fuelLabel = $fuelGauge.querySelector('.gauge-label') as HTMLElement;
+  const fuelVisual = $fuelGauge.querySelector('.gauge-visual') as HTMLElement;
+  fuelLabel.textContent = `${car.fuelLevel.toFixed(0)}%`;
+  fuelVisual.style.setProperty('--value', `${car.fuelLevel}%`);
+}
+
+function updateColorPreview(): void {
+  if ($colorPreview) {
+    $colorPreview.style.backgroundColor = $color.value;
+  }
+}
+
 function render(): void {
   if (!car) {
     $status.textContent = "Aucune voiture créée.";
     $start.disabled = true;
     $accelerate.disabled = true;
+    $brake.disabled = true;
     $stop.disabled = true;
+    $refuel.disabled = true;
     return;
   }
+
   $status.textContent = car.status();
   $start.disabled = car.started;
   $accelerate.disabled = !car.started;
+  $brake.disabled = !car.started || car.speed === 0;
   $stop.disabled = !car.started && car.speed === 0;
+  $refuel.disabled = car.started;
+
+  updateGauges();
 }
 
+// Color preview update
+$color.addEventListener("input", updateColorPreview);
+updateColorPreview();
+
 $create.addEventListener("click", () => {
-  console.log("Create button clicked");
   const model = ($model.value || "Model 3").trim();
   const brand = ($brand.value || "Tesla").trim();
-  const color = ($color.value || "rouge").trim();
+  const color = $color.value;
   const year = parseInt($year.value || "2024", 10);
-  console.log("Creating car with:", { model, brand, color, year });
-  car = new Car(model, brand, color, isNaN(year) ? 2024 : year);
-  console.log("Car created:", car);
+  const type = $type.value as CarType;
+  const maxSpeed = parseInt($maxSpeed.value || "200", 10);
+
+  car = new Car(
+    model,
+    brand,
+    color,
+    isNaN(year) ? 2024 : year,
+    type,
+    isNaN(maxSpeed) ? 200 : maxSpeed
+  );
+
+  // Save to localStorage
+  localStorage.setItem('lastCar', JSON.stringify({
+    model, brand, color, year, type, maxSpeed
+  }));
+
   render();
 });
 
@@ -71,11 +130,47 @@ $accelerate.addEventListener("click", () => {
   render();
 });
 
+$brake.addEventListener("click", () => {
+  if (!car) return;
+  car.brake(10);
+  render();
+});
+
 $stop.addEventListener("click", () => {
   if (!car) return;
   car.stop();
   render();
 });
+
+$refuel.addEventListener("click", () => {
+  if (!car) return;
+  car.refuel(100);
+  render();
+});
+
+// Load last car from localStorage
+const lastCar = localStorage.getItem('lastCar');
+if (lastCar) {
+  try {
+    const { model, brand, color, year, type, maxSpeed } = JSON.parse(lastCar);
+    $model.value = model;
+    $brand.value = brand;
+    $color.value = color;
+    $year.value = year.toString();
+    $type.value = type;
+    $maxSpeed.value = maxSpeed.toString();
+    updateColorPreview();
+  } catch (e) {
+    console.error('Failed to load last car:', e);
+  }
+}
+
+// Update gauges every second when the car is running
+setInterval(() => {
+  if (car && car.started) {
+    render();
+  }
+}, 1000);
 
 // Initial render
 render();
