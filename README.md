@@ -79,9 +79,3 @@ Remarque: Le build Node génère `dist/index.js` (CommonJS). Le build Web génè
 
 - `tsconfig.web.json` : build navigateur → modules ES, sortie `public/js/`
 - `tsconfig.node.json` : build Node → CommonJS, sortie `dist/`
-
-## Dépannage
-
-- Erreur « Cannot use import statement outside a module » en lançant `public/js/*.js` avec Node:
-  - Ces fichiers sont des modules ES pour le navigateur. Utilisez `npm run start:node` uniquement pour exécuter la version Node dans `dist/`.
-  - Pour l'interface web, servez le dossier `public/` (`npm run serve:web`) ou ouvrez `public/index.html` dans un navigateur.
