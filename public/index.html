@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Voiture - Démo</title>
+    <style>
+      :root {
+        font-family: system-ui, sans-serif;
+        color-scheme: light dark;
+      }
+      body {
+        margin: 0;
+        padding: 24px;
+        display: grid;
+        gap: 16px;
+      }
+      .card {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 16px;
+        max-width: 720px;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      label {
+        display: grid;
+        gap: 4px;
+        font-size: 0.9rem;
+      }
+      input {
+        padding: 8px;
+        border-radius: 6px;
+        border: 1px solid #bbb;
+      }
+      button {
+        padding: 8px 12px;
+        border-radius: 6px;
+        border: 1px solid #888;
+        cursor: pointer;
+      }
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .status {
+        white-space: pre-wrap;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        background: rgba(0, 0, 0, 0.05);
+        padding: 12px;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Interface Voiture (Car)</h1>
+    <div class="card">
+      <h2>Créer une voiture</h2>
+      <div class="row">
+        <label
+          >Modèle
+          <input id="model" placeholder="Model 3" />
+        </label>
+        <label
+          >Marque
+          <input id="brand" placeholder="Tesla" />
+        </label>
+        <label
+          >Couleur
+          <input id="color" placeholder="rouge" />
+        </label>
+        <label
+          >Année
+          <input id="year" type="number" value="2024" />
+        </label>
+      </div>
+      <div class="actions" style="margin-top: 12px">
+        <button id="create">Créer voiture</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Contrôles</h2>
+      <div class="actions">
+        <button id="start" disabled>Démarrer</button>
+        <button id="accelerate" disabled>Accélérer +10</button>
+        <button id="stop" disabled>Arrêter</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>État</h2>
+      <div id="status" class="status">Aucune voiture créée.</div>
+    </div>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

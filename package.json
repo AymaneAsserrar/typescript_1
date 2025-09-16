@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc -p .",
     "start": "node dist/index.js",
-    "dev": "ts-node src/index.ts"
+    "dev": "ts-node src/index.ts",
+    "build:web": "tsc -p tsconfig.web.json"
   },
   "devDependencies": {
     "ts-node": "^10.9.2",
