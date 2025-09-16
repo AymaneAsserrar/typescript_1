@@ -72,4 +72,4 @@ Le projet utilise la configuration suivante :
 - Cible ES2020 pour la compatibilité navigateur moderne
 - Modules ES2020 pour l'import/export natif
 - Mode strict activé pour une meilleure sécurité des types
-- `public/app.js` : logique UI (importe `./js/Car.js`)
+- Compilation automatique vers le dossier `public/js/`

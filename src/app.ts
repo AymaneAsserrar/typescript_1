@@ -1,6 +1,13 @@
-import { Car } from "./Car";
+import { Car } from "./Car.js";
 
-const el = (id: string): HTMLElement | null => document.getElementById(id);
+const el = (id: string): HTMLElement | null => {
+  const element = document.getElementById(id);
+  if (!element) {
+    console.error(`Element with id "${id}" not found`);
+  }
+  return element;
+};
+
 const $model = el("model") as HTMLInputElement;
 const $brand = el("brand") as HTMLInputElement;
 const $color = el("color") as HTMLInputElement;
@@ -10,6 +17,19 @@ const $start = el("start") as HTMLButtonElement;
 const $accelerate = el("accelerate") as HTMLButtonElement;
 const $stop = el("stop") as HTMLButtonElement;
 const $status = el("status") as HTMLElement;
+
+// Debug check for all elements
+console.log("Elements loaded:", {
+  model: $model,
+  brand: $brand,
+  color: $color,
+  year: $year,
+  create: $create,
+  start: $start,
+  accelerate: $accelerate,
+  stop: $stop,
+  status: $status,
+});
 
 let car: Car | null = null;
 
@@ -28,11 +48,14 @@ function render(): void {
 }
 
 $create.addEventListener("click", () => {
+  console.log("Create button clicked");
   const model = ($model.value || "Model 3").trim();
   const brand = ($brand.value || "Tesla").trim();
   const color = ($color.value || "rouge").trim();
   const year = parseInt($year.value || "2024", 10);
+  console.log("Creating car with:", { model, brand, color, year });
   car = new Car(model, brand, color, isNaN(year) ? 2024 : year);
+  console.log("Car created:", car);
   render();
 });
 
