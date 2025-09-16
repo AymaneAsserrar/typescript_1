@@ -11,14 +11,12 @@ export class Car {
   private _speed: number;
   private _distance: number;
 
-  // Public properties
   model: string;
   brand: string;
   color: string;
   year: number;
   started: boolean;
 
-  // Getters
   get maxSpeed(): number {
     return this._maxSpeed;
   }
@@ -84,12 +82,10 @@ export class Car {
     const actualAcceleration = newSpeed - this._speed;
     this._speed = newSpeed;
 
-    // Calculate fuel consumption based on acceleration and car type
     const fuelConsumption = this.calculateFuelConsumption(actualAcceleration);
     this._fuelLevel = Math.max(0, this._fuelLevel - fuelConsumption);
 
-    // Update distance
-    this._distance += this._speed / 3600; // Convert to km (assuming updates every second)
+    this._distance += this._speed / 3600;
   }
 
   brake(value: number): void {
@@ -105,10 +101,9 @@ export class Car {
   }
 
   private calculateFuelConsumption(acceleration: number): number {
-    const baseConsumption = 0.01; // Base consumption per second
-    const accelerationConsumption = acceleration * 0.002; // Additional consumption for acceleration
+    const baseConsumption = 0.01;
+    const accelerationConsumption = acceleration * 0.002;
 
-    // Different car types have different fuel efficiency
     const typeMultiplier = {
       [CarType.Electric]: 0.6,
       [CarType.Hybrid]: 0.8,
