@@ -41,18 +41,7 @@ npm run build:web
 ```
 
 2. Ouvrir l'interface:
-   - Option simple: ouvrir le fichier `public/index.html` dans le navigateur
-   - Option serveur local (recommandé):
-     - Python 3:
-       ```powershell
-       python -m http.server 8080
-       ```
-       Puis ouvrir http://localhost:8080/public/
-     - ou avec Node (si installé):
-       ```powershell
-       npx http-server -p 8080 .
-       ```
-       Puis ouvrir http://localhost:8080/public/
+   - Option simple: ouvrir le fichier `public/index.html` dans le navigateur / Avec le live server si sur VSCODE
 
 ## Fichiers importants
 
